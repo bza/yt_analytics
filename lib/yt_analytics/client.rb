@@ -39,11 +39,6 @@ class YTAnalytics
       client.get_my_videos(opts)
     end
 
-    # Gets the user's watch history
-    def watch_history
-      client.get_watch_history
-    end
-
     def analytics(opts = {})
       client.get_analytics(opts)
     end
