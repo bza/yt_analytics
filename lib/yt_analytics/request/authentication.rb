@@ -54,9 +54,20 @@ class YTAnalytics
         return YTAnalytics::Parser::AnalyticsParser.new(response.body).parse
       end
 
-      def temporal_totals(dimension, start_date, end_date, user_id)
+      def temporal_totals(dimension, user_id, options)
         #dimension is either day, 7DayTotals, 30DayTotals, or month
-        opts = {'end-date'=>end_date.strftime("%Y-%m-%d"),'ids' => "channel==#{user_id}", 'metrics' => 'views,comments,favoritesAdded,favoritesRemoved,likes,dislikes,shares,subscribersGained,subscribersLost,uniques','start-date' => start_date.strftime("%Y-%m-%d"),'dimensions' => dimension}
+        
+        opts = {'ids' => "channel==#{user_id}", 'dimensions' => dimension}
+        opts['start-date'] = (options['start-date'].strftime("%Y-%m-%d") if options['start-date']) || 1.day.ago.strftime("%Y-%m-%d")
+        opts['end-date'] = (options['end-date'].strftime("%Y-%m-%d") if options['end-date']) || 1.day.ago.strftime("%Y-%m-%d")
+        if options['metrics'].class == Array
+          opts['metrics'] = options['metrics'].join(",")
+        elsif options['metrics'].class == String
+          opts['metrics'] = options['metrics'].delete(" ")
+        else
+          opts['metrics'] = 'views,comments,favoritesAdded,favoritesRemoved,likes,dislikes,shares,subscribersGained,subscribersLost,uniques'
+        end
+        
         get_url     = "/youtube/analytics/v1/reports?"
         get_url     << opts.collect { |k,p| [k,p].join '=' }.join('&')
         response    = yt_session('https://www.googleapis.com').get(get_url)

@@ -29,34 +29,24 @@ class YTAnalytics
       client.get_current_user
     end
 
-    # Gets the authenticated users video with the given ID. It may be private.
-    def my_video(video_id)
-      client.get_my_video(video_id)
+    def analytics(options = {})
+      client.get_analytics(options)
     end
 
-    # Gets all videos 
-    def my_videos(opts = {})
-      client.get_my_videos(opts)
+    def seven_day_totals(options = {})
+      client.temporal_totals('7DayTotals',self.user_id, options)
     end
 
-    def analytics(opts = {})
-      client.get_analytics(opts)
+    def thirty_day_totals(options = {})
+      client.temporal_totals('30DayTotals',self.user_id, options)
     end
 
-    def seven_day_totals(start_date = 2.day.ago, end_date = 2.day.ago)
-      client.temporal_totals('7DayTotals',start_date, end_date, self.user_id)
+    def day_totals(options = {})
+      client.temporal_totals('day',self.user_id, options)
     end
 
-    def thirty_day_totals(start_date = 2.day.ago, end_date = 2.day.ago)
-      client.temporal_totals('30DayTotals',start_date, end_date, self.user_id)
-    end
-
-    def day_totals(start_date = 2.day.ago, end_date = 2.day.ago)
-      client.temporal_totals('day',start_date, end_date, self.user_id)
-    end
-
-    def month_totals(start_date = 2.day.ago, end_date = 2.day.ago)
-      client.temporal_totals('month',start_date, end_date, self.user_id)
+    def month_totals(options = {})
+      client.temporal_totals('month',self.user_id, options)
     end
 
     private
