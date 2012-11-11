@@ -37,6 +37,11 @@ thirty = client.thirty_day_totals()
 day = client.day_totals()
 month = client.month_totals()
 ```
+You can also put in your own values for metrics, start-date, and end-date:
+
+```ruby
+seven = client.seven_day_totals({'start-date'=> 45.days.ago, 'end-date'=> 1.day.ago, 'metrics'=> ['views','comments']})
+```
 
 ## Contributors
 
