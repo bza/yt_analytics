@@ -31,6 +31,13 @@ You can see more about OAuth2 in the [wiki]( https://github.com/kylejginavan/you
 
 These dimensions indicate that an Analytics report should aggregate data based on a time period, such as a day, a week, or a month.
 
+```ruby
+seven = client.seven_day_totals()
+thirty = client.thirty_day_totals()
+day = client.day_totals()
+month = client.month_totals()
+```
+
 ## Contributors
 
 * Drew Baumann - http://github.com/drewbaumann
