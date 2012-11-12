@@ -56,10 +56,19 @@ class YTAnalytics
 
       def temporal_totals(dimension, user_id, options)
         #dimension is either day, 7DayTotals, 30DayTotals, or month
-        
         opts = {'ids' => "channel==#{user_id}", 'dimensions' => dimension}
-        opts['start-date'] = (options['start-date'].strftime("%Y-%m-%d") if options['start-date']) || 1.day.ago.strftime("%Y-%m-%d")
-        opts['end-date'] = (options['end-date'].strftime("%Y-%m-%d") if options['end-date']) || 1.day.ago.strftime("%Y-%m-%d")
+
+        start_date = options['start-date'] || 2.days.ago
+        end_date = options['end-date'] || 2.days.ago
+
+        if (dimension == "month")
+          start_date = start_date.at_beginning_of_month
+          end_date = end_date.at_beginning_of_month
+        end
+
+        opts['start-date'] = start_date.strftime("%Y-%m-%d")
+        opts['end-date'] = end_date.strftime("%Y-%m-%d")
+
         if options['metrics'].class == Array
           opts['metrics'] = options['metrics'].join(",")
         elsif options['metrics'].class == String
