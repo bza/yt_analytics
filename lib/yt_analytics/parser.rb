@@ -51,7 +51,7 @@ class YTAnalytics
 
             headers.each_with_index do |column,i|
               if column["columnType"] == "DIMENSION"
-                metrics[:endDate] = Date.strptime row[i], "%Y-%m-%d"
+                metrics[:endDate] = Date.strptime row[i], row[i].length  == 7 ? "%Y-%m" : "%Y-%m-%d"
               elsif column["columnType"] == "METRIC"
                 metrics[eval(":" + column["name"])] = row[i]
               end
