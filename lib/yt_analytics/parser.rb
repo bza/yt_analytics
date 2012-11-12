@@ -65,6 +65,22 @@ class YTAnalytics
       end
     end
 
+    class DemographicParser < FeedParser
+
+    private
+      def parse_content(content)
+        temporal_metrics = []
+        if content.is_a? Hash and content["rows"].is_a? Array and content["rows"].length > 0
+          metrics = {}
+
+          content["rows"].each do |row|
+            metrics[eval(":" + row[0].to_s.underscore + row[1].to_s.underscore)] = row[2]
+          end
+        end
+        YouTubeIt::Request::DemographicMetrics.new(metrics)
+      end
+    end
+
     class AnalyticsParser < FeedParser #:nodoc:
 
     private

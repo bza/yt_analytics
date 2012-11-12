@@ -76,6 +76,25 @@ class YTAnalytics
       end
 
 
+      def demographic_percentages(user_id, options)        
+        opts = {'ids' => "channel==#{user_id}", 'dimensions' => 'ageGroup,gender'}
+        opts['start-date'] = (options['start-date'].strftime("%Y-%m-%d") if options['start-date']) || 2.day.ago.strftime("%Y-%m-%d")
+        opts['end-date'] = (options['end-date'].strftime("%Y-%m-%d") if options['end-date']) || 2.day.ago.strftime("%Y-%m-%d")
+        if options['metrics'].class == Array
+          opts['metrics'] = options['metrics'].join(",")
+        elsif options['metrics'].class == String
+          opts['metrics'] = options['metrics'].delete(" ")
+        else
+          opts['metrics'] = 'viewerPercentage'
+        end
+        
+        get_url     = "/youtube/analytics/v1/reports?"
+        get_url     << opts.collect { |k,p| [k,p].join '=' }.join('&')
+        response    = yt_session('https://www.googleapis.com').get(get_url)
+        content = JSON.parse(response.body)
+        return YTAnalytics::Parser::DemographicParser.new(content).parse
+      end
+
       private
 
 
