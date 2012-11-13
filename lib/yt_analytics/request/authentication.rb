@@ -68,6 +68,7 @@ class YTAnalytics
 
         opts['start-date'] = start_date.strftime("%Y-%m-%d")
         opts['end-date'] = end_date.strftime("%Y-%m-%d")
+        opts['filters'] = options['filters']
 
         if options['metrics'].class == Array
           opts['metrics'] = options['metrics'].join(",")
