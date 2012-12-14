@@ -2,7 +2,7 @@ class YTAnalytics
   module Model #:nodoc:
     class DemographicMetrics #:nodoc:
 
-      include YouTubeIt::Logging
+      include YTAnalytics::Logging
 
       attr_accessor :end_date, :age13_17female, :age55_64female, :age65_female, :age25_34male, :age25_34female, :age55_64male, 
         :age45_54female, :age35_44female, :age18_24female, :age65_male, :age35_44male, :age45_54male, :age18_24male, :age13_17male
