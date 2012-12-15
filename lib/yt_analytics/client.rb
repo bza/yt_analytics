@@ -49,6 +49,16 @@ class YTAnalytics
       client.temporal_totals('month',self.user_id, options)
     end
 
+    ### DEMOGRAPHICS METRICS
+    def demographic_percentages(options = {})
+      client.demographic_percentages(self.user_id, options)
+    end
+
+    ### WATCH TIME METRICS
+    def day_watch_time(options = {})
+      client.watch_time_metrics('day', self.user_id, options)
+    end
+
     private
 
     def client

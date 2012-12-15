@@ -65,6 +65,52 @@ class YTAnalytics
       end
     end
 
+    class DemographicParser < FeedParser
+
+    private
+      def parse_content(content)
+        temporal_metrics = []
+        if content.is_a? Hash and content["rows"].is_a? Array and content["rows"].length > 0
+          metrics = {}
+
+          content["rows"].each do |row|
+            metrics[eval(":" + row[0].to_s.underscore + row[1].to_s.underscore)] = row[2]
+          end
+        end
+        YouTubeIt::Request::DemographicMetrics.new(metrics)
+      end
+    end
+
+
+    class WatchTimeParser < FeedParser
+
+    private
+      def parse_content(content)
+        watch_time_metrics = []
+        if content.is_a? Hash and content["rows"].is_a? Array and content["rows"].length > 0
+
+          headers = content["columnHeaders"]
+
+          content["rows"].each do |row|
+            metrics = {}
+
+            headers.each_with_index do |column,i|
+              if column["columnType"] == "DIMENSION"
+                metrics[:endDate] = Date.strptime row[i], "%Y-%m-%d"
+              elsif column["columnType"] == "METRIC"
+                metrics[eval(":" + column["name"])] = row[i]
+              end
+            end
+            watch_time_metrics.push(YTAnalytics::Model::WatchTimeMetrics.new(metrics))
+          end
+
+          watch_time_metrics.sort { |a,b| a.end_date <=> b.end_date }
+        end
+        watch_time_metrics
+      end
+    end
+
+
     class AnalyticsParser < FeedParser #:nodoc:
 
     private

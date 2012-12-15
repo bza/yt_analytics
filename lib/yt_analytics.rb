@@ -63,6 +63,8 @@ end
   client
   parser
   model/temporal_metrics
+  model/demographic_metrics
+  model/watch_time_metrics
   request/authentication
   middleware/faraday_authheader.rb
   middleware/faraday_oauth.rb
