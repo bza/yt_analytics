@@ -85,6 +85,23 @@ class YTAnalytics
         return YTAnalytics::Parser::TemporalParser.new(content).parse
       end
 
+      def sharing_service(user_id, options)
+        opts = {'ids' => "channel==#{user_id}",'dimensions' => 'sharingService', 'metrics'=> 'shares'}
+
+        opts['filters'] = options['filters']
+
+        start_date = options['start-date'] || 2.days.ago
+        end_date = options['end-date'] || 2.days.ago
+
+        opts['start-date'] = start_date.strftime("%Y-%m-%d")
+        opts['end-date'] = end_date.strftime("%Y-%m-%d")
+        binding.remote_pry
+
+        get_url     = "/youtube/analytics/v1/reports?"
+        get_url     << opts.collect { |k,p| [k,p].join '=' }.join('&')
+        response    = yt_session('https://www.googleapis.com').get(get_url)
+        content = JSON.parse(response.body)
+      end
 
       private
 

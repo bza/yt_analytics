@@ -49,6 +49,10 @@ class YTAnalytics
       client.temporal_totals('month',self.user_id, options)
     end
 
+    def sharing_service(options ={})
+      client.sharing_service(self.user_id, options)
+    end
+
     private
 
     def client
