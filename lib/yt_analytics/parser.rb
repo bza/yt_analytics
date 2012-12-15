@@ -77,7 +77,7 @@ class YTAnalytics
             metrics[eval(":" + row[0].to_s.underscore + row[1].to_s.underscore)] = row[2]
           end
         end
-        YouTubeIt::Request::DemographicMetrics.new(metrics)
+        YTAnalytics::Model::DemographicMetrics.new(metrics)
       end
     end
 
