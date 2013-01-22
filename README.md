@@ -25,7 +25,7 @@ If your access token is still valid (be careful, access tokens may only be valid
 client.refresh_access_token!
 ```
 
-You can see more about OAuth2 in the [wiki]( https://github.com/kylejginavan/youtube_it/wiki/How-To:-Use-OAuth-2).
+You can see more about OAuth2 in youtube_it gem's [wiki]( https://github.com/kylejginavan/youtube_it/wiki/How-To:-Use-OAuth-2).
 
 ### Temporal Dimension Queries
 
