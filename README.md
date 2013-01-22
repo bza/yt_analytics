@@ -7,7 +7,7 @@ yt_analytics is a ruby gem for the [YouTube Analytics API](https://developers.go
 ## Installation & Setup
 
   * Create a youtube account.
-  * Create a developer key here [Google Api Console](http://code.google.com/apis/console).
+  * Create a developer key in the [Google Api Console](http://code.google.com/apis/console).
   * gem install yt_analytics
 
 
